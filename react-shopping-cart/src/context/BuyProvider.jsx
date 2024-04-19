@@ -9,10 +9,10 @@ export const BuyProvider = ({children}) => {
             case '[CART] Add Product':
                 return [...state, action.payload]
             case "[CART] Delete Product":
-                return state.filter(p => p.id !== action.payload)
+                return state.filter((p) => p.key !== action.payload.key)
             case "[CART] Add Quantity":
                 return state.map(item => {
-                    if(item.id == action.payload){
+                    if(item.key == action.payload){
                         const qt = item.cantidad + 1;
                         return {...item, cantidad:qt}
                     }else{
@@ -21,7 +21,7 @@ export const BuyProvider = ({children}) => {
                 })
             case "[CART] Decrement Quantity":
                 return state.map(item => {
-                    if(item.id == action.payload && item.cantidad > 1){
+                    if(item.key == action.payload && item.cantidad > 1){
                         const qt = item.cantidad - 1;
                         return {...item, cantidad:qt}
                     }else{
@@ -42,10 +42,10 @@ export const BuyProvider = ({children}) => {
         dispatch(action)
     }
 
-    const eliminarCompra = (id) => {
+    const eliminarCompra = (compra) => {
         const action = {
             type: "[CART] Delete Product",
-            payload: id
+            payload: compra
         }
         dispatch(action)
     }

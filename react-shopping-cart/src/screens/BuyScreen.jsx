@@ -3,8 +3,10 @@ import { Card } from "../components/Card";
 import { ProductsContext } from "../context/ProductsContext";
 import { BuyContext } from "../context/BuyContext";
 import Loading from "../components/Loading";
+import { Filter } from "../components/Filter";
 export const BuyScreen = () => {
     const { productes } = useContext(ProductsContext)
+    const [genero, setGenero] = useState('');
     const {buyList,afegirCompra,eliminarCompra,augmentarQuantitat,disminuirQuantitat} = useContext(BuyContext)
     const handleAfegir = (compra) =>
     {
@@ -13,20 +15,28 @@ export const BuyScreen = () => {
     }
     const handleEliminar = (p) =>
     {
-        eliminarCompra(p.id)
+        eliminarCompra(p)
         p.estado = false
     }
+
+    const cambiarGenero = (g) => 
+    {
+        setGenero(g);
+    }
+
     return (
         <>
             <h1>Buy list</h1>
+            <Filter setGenre={cambiarGenero} genre={genero} />
             {
                 productes.map( p => 
-                    buyList.includes(p) ? 
-                    <Card imatge={p.image} titol={p.title} descripcio={p.description} preu={p.price + " ₽"} key={p.id}                      handleAfegir = { () => handleAfegir(p)}
-                    handleEliminar = { () => handleEliminar(p)} estado={p.estado}/> 
+                    genero == '' ?
+                    <Card imatge={p.data.header_image} titol={p.data.name} descripcio={p.data.short_description} preu={p.data.price_overview.final_formatted} key={p.key} handleAfegir = { () => handleAfegir(p)} handleEliminar = { () => handleEliminar(p)} estado={p.estado} link={p.data.website} /> 
                     :
-                    <Card imatge={p.image} titol={p.title} descripcio={p.description} preu={p.price + " ₽"} key={p.id}                      handleAfegir = { () => handleAfegir(p)}
-                    handleEliminar = { () => handleEliminar(p)} estado={p.estado}/> 
+                    p.data.genres.find(genre => genre.description.toLowerCase() == genero.toLocaleLowerCase()) ?
+                    <Card imatge={p.data.header_image} titol={p.data.name} descripcio={p.data.short_description} preu={p.data.price_overview.final_formatted} key={p.key} handleAfegir = { () => handleAfegir(p)} handleEliminar = { () => handleEliminar(p)} estado={p.estado} link={p.data.website} /> 
+                    :
+                    ''
                 )
             }
             {

@@ -9,7 +9,7 @@ export const ShoppingCart = () => {
     return (
         <>
             <h1>
-                Shopping Application
+                Game Shop :)
             </h1>
             <hr />
 

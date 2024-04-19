@@ -8,9 +8,9 @@ export const NavBar = () => {
     const {buyList} = useContext(BuyContext)
     return (
         <>
-            <nav className="navbar navbar-expand-sm bg-body-tertiary mb-3">
+            <nav className="navbar navbar-expand-sm bg-body-tertiary mb-3 rounded ">
                 <div className="container-fluid">
-                    <NavLink to="/" className="navbar-brand">Shop App</NavLink>
+                    <NavLink to="/" className="navbar-brand">Games</NavLink>
                     <div className="navbar-collapse">
                         <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                             <li className="nav-item">

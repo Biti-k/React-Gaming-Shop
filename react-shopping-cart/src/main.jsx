@@ -7,7 +7,9 @@ import "./styles/main.css"
 ReactDOM.createRoot(document.getElementById('root')).render(
   <BrowserRouter>
     <React.StrictMode>
-      <ShoppingCart />
+      <div className='container'>
+        <ShoppingCart />
+      </div>
     </React.StrictMode>
   </BrowserRouter>
 

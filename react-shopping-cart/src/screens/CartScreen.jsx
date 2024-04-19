@@ -12,16 +12,16 @@ export const CartScreen = () => {
 
     const handleEliminar = (compra) => {
         productes.map((e)=>{
-            if(e.id == compra.id){
+            if(e.key == compra.key){
                 e.estado = false;
             }
         })
-        eliminarCompra(compra.id)
+        eliminarCompra(compra)
     }
 
     function calcTotal(){
         return buyList.reduce((total, item)=>
-            total + item.price*item.cantidad, 0
+            total + item.data.price_overview.final_formatted.slice(1)*item.cantidad, 0
         ).toFixed(2)
     }
     
@@ -33,7 +33,7 @@ export const CartScreen = () => {
             <h1>Shopping Cart</h1>
             {
                 buyList.length < 1 ? 
-                <div class="alert alert-warning mt-3 " role="alert">
+                <div className="alert alert-warning mt-3 " role="alert">
                 You have not added anything yet
                 </div>
                 :
@@ -51,11 +51,11 @@ export const CartScreen = () => {
                     <tbody>
                         {
                             buyList.map(e =>
-                                <tr key={e.id}>
-                                    <th scope="row">{e.title}</th>   
-                                    <td>{e.price} ₽</td>
-                                    <td> <CountQuantity handleAumentar={()=>{augmentarQuantitat(e.id)}} handleDecrementar={()=>{disminuirQuantitat(e.id)}} item={e}></CountQuantity> </td>
-                                    <td>{(e.price * e.cantidad).toFixed(2)} ₽</td>
+                                <tr key={e.key}>
+                                    <th scope="row">{e.data.name}</th>   
+                                    <td>{e.data.price_overview.final_formatted}</td>
+                                    <td> <CountQuantity handleAumentar={()=>{augmentarQuantitat(e.key)}} handleDecrementar={()=>{disminuirQuantitat(e.key)}} item={e}></CountQuantity> </td>
+                                    <td>{'$'+(e.data.price_overview.final_formatted.slice(1) * e.cantidad).toFixed(2)}</td>
                                     <td><button className="btn btn-danger" onClick={() => {handleEliminar(e)}}>Remove</button></td>
                                 </tr>
                             )
@@ -63,7 +63,7 @@ export const CartScreen = () => {
                     </tbody>
                 </table>
                 <p>Total everything: {
-                    calcTotal() + " ₽"
+                    '$'+calcTotal()
                 }</p>
                 <div className="d-grid gap-2">
                     <button className="btn btn-warning">Comprar</button>

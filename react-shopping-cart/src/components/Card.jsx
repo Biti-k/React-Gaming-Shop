@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import "../styles/card.css"
-export const Card = ({imatge, titol, descripcio, preu, handleAfegir, handleEliminar, estado}) => {
+export const Card = ({imatge, titol, descripcio, preu, handleAfegir, handleEliminar, estado, link}) => {
     const [added, setAdded] = useState(false)
 
     const f_afegirProducte = () => {
@@ -32,6 +32,14 @@ export const Card = ({imatge, titol, descripcio, preu, handleAfegir, handleElimi
                     :
                     <button className="boton-agregar" onClick={f_afegirProducte}>Add to cart</button>
                 }
+                <br></br>
+                {
+                    link != null ?
+                    <a href={link} target="_blank">Official Website</a>
+                    :
+                    ''
+                }
+
             </div>
         </div>
     )
